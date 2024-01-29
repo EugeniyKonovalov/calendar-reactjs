@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import StoreProvider from "@/providers/StoreProvider";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          "max-h-screen font-sans antialiased dark",
+          inter.className
+        )}
+      >
+        <StoreProvider>
+          <div className="flex min-h-screen flex-col w-full">
+            <Header />
+            {children}
+            <footer className="mt-auto">
+              <div className="flex items-center justify-center py-5">
+                <p className=" text-sm font-light">
+                  &copy;{new Date().getFullYear()}
+                </p>
+              </div>
+            </footer>
+          </div>
+        </StoreProvider>
+      </body>
     </html>
   );
 }
